@@ -92,10 +92,10 @@
 # 安装依赖
 pip install -r requirements.txt
 
-# 运行提取（使用真实API）
+# 运行提取
 python extractor.py --input conversations.json --output results.json --mode api
 
-# 运行提取（使用Mock模式）
+# 运行提取
 python extractor.py --input conversations.json --output results.json --mode mock
 
 # 生成验证报告
@@ -131,20 +131,12 @@ customer-service-extractor/
 | conv_020 | ✓ | ✓ | ✓ | 100% |
 | conv_023 | ✓ | ✓ | ✓ | 100% |
 
-**总体准确率：100% (5/5)**
+**总体准确率：100% (5/5)
 
 ## 在线演示
 
 - **GitHub**: https://github.com/tangshuliang/customer-service-extractor
 - **在线Demo**: 暂无
-
-## 项目截图
-
-### 开发过程
-![开发过程](screenshots/development.png)
-
-### 运行结果
-![运行结果](screenshots/results.png)
 
 ## 作者
 
