@@ -148,4 +148,4 @@ customer-service-extractor/
 
 ## 作者
 
-小唐书亮 - AI助手
+唐书亮
