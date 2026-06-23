@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Customer Service Conversation Extraction Schema",
+  "type": "object",
+  "required": [
+    "conversation_id",
+    "user_id",
+    "primary_intent",
+    "emotions",
+    "resolution_status",
+    "complexity_score"
+  ],
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "对话唯一标识符"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "用户ID"
+    },
+    "session_info": {
+      "type": "object",
+      "properties": {
+        "start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "对话开始时间"
+        },
+        "end_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "对话结束时间"
+        },
+        "duration_seconds": {
+          "type": "number",
+          "description": "对话总时长（秒）"
+        },
+        "message_count": {
+          "type": "number",
+          "description": "消息总数"
+        }
+      }
+    },
+    "primary_intent": {
+      "type": "string",
+      "description": "用户主要诉求/意图",
+      "examples": ["退款申请", "订单查询", "产品咨询", "投诉建议"]
+    },
+    "secondary_intents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "次要诉求列表"
+    },
+    "intent_switched": {
+      "type": "boolean",
+      "description": "对话过程中是否切换了主要话题"
+    },
+    "intent_switch_details": {
+      "type": "object",
+      "description": "话题切换详情",
+      "properties": {
+        "original_intent": {
+          "type": "string"
+        },
+        "new_intent": {
+          "type": "string"
+        },
+        "switch_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "emotions": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {
+        "start": {
+          "type": "string",
+          "enum": ["angry", "frustrated", "neutral", "positive", "excited"],
+          "description": "对话开始时的情绪"
+        },
+        "during": {
+          "type": "string",
+          "enum": ["escalating", "stable", "improving", "fluctuating"],
+          "description": "对话过程中的情绪变化趋势"
+        },
+        "end": {
+          "type": "string",
+          "enum": ["angry", "unsatisfied", "neutral", "satisfied", "delighted"],
+          "description": "对话结束时的情绪"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "情绪判断置信度"
+        }
+      }
+    },
+    "resolution_status": {
+      "type": "string",
+      "enum": ["fully_resolved", "partially_resolved", "pending", "unresolved", "transferred"],
+      "description": "问题解决状态"
+    },
+    "resolution_method": {
+      "type": "string",
+      "enum": ["self_service", "agent_assisted", "escalated", "not_resolved"],
+      "description": "解决方式"
+    },
+    "resolution_details": {
+      "type": "string",
+      "description": "解决方案详情"
+    },
+    "agent_transferred": {
+      "type": "boolean",
+      "description": "是否从机器人转接到人工客服"
+    },
+    "transfer_details": {
+      "type": "object",
+      "properties": {
+        "transferred": {
+          "type": "boolean"
+        },
+        "transfer_reason": {
+          "type": "string",
+          "enum": ["user_request", "bot_limitation", "complex_issue", "escalation_needed", "sentiment_alert"]
+        },
+        "transfer_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "agent_id": {
+          "type": "string"
+        }
+      }
+    },
+    "key_entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["order_id", "product_name", "amount", "date", "phone", "email", "address", "other"]
+          },
+          "value": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string",
+            "description": "实体出现的上下文"
+          }
+        }
+      },
+      "description": "对话中提到的关键实体"
+    },
+    "satisfaction_indicators": {
+      "type": "object",
+      "properties": {
+        "explicit_feedback": {
+          "type": "string",
+          "enum": ["positive", "neutral", "negative", "none"]
+        },
+        "implicit_signals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "暗示满意度的信号，如感谢、重复提问等"
+        },
+        "sentiment_score": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "情感分数，-1到1"
+        }
+      }
+    },
+    "follow_up_required": {
+      "type": "boolean",
+      "description": "是否需要后续跟进"
+    },
+    "follow_up_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "待跟进事项列表"
+    },
+    "complexity_score": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "对话复杂度评分，1=简单，5=非常复杂"
+    },
+    "complexity_factors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["multiple_intents", "topic_switching", "emotional_escalation", "missing_info", "technical_issue", "policy_exception"]
+      },
+      "description": "导致复杂度的因素"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "自动标签"
+    },
+    "summary": {
+      "type": "string",
+      "description": "对话摘要（50字以内）"
+    },
+    "extracted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "提取时间"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "整体提取置信度"
+    }
+  }
+}
