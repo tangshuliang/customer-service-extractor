@@ -1,13 +1,9 @@
-# 客服对话结构化信息提取工具依赖
 # Python 3.8+
 
-# 核心依赖
 jsonschema>=4.0.0
 
-# API模式可选依赖
-# openai>=1.0.0
-# requests>=2.28.0
+openai>=1.0.0
+requests>=2.28.0
 
-# 开发依赖
-# pytest>=7.0.0
-# black>=22.0.0
+pytest>=7.0.0
+black>=22.0.0
